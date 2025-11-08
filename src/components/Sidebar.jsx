@@ -22,6 +22,8 @@ const doctorNavLinks = [
     icon: assets.appointment_icon,
     label: "My Appointments",
   },
+  { to: "/doctor/messages", icon: assets.people_icon, label: "Messages" },
+  { to: "/doctor/slots", icon: assets.appointment_icon, label: "Slots" },
   { to: "/doctor/profile", icon: assets.people_icon, label: "Profile" },
 ];
 
