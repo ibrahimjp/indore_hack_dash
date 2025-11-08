@@ -89,27 +89,32 @@ const DoctorMessages = () => {
   );
 
   return (
-    <div className="w-full max-w-6xl m-5">
-      <p className="mb-3 text-lg font-medium text-white">Messages</p>
-      <div className="bg-[#2a2a2a] border border-gray-700 rounded">
-        <div className="flex h-[80vh]">
+    <div className="w-full p-6 sm:p-8">
+      <div className="mb-6">
+        <h2 className="text-3xl font-bold text-white mb-2">Messages</h2>
+        <p className="text-gray-400">Chat with your patients</p>
+      </div>
+      <div className="bg-[#000000] border border-[#064928]/30 rounded-xl overflow-hidden">
+        <div className="flex h-[75vh]">
           {/* Conversations List */}
-          <div className="w-1/3 border-r border-gray-700 flex flex-col">
-            <div className="p-4 border-b border-gray-700">
+          <div className="w-1/3 border-r border-[#064928]/30 flex flex-col bg-[#000000]">
+            <div className="p-4 border-b border-[#064928]/30 bg-[#064928]/10">
               <input
                 type="text"
                 placeholder="Search conversations..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-[#1a1a1a] border border-gray-600 rounded px-3 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary"
+                className="w-full bg-[#000000] border border-[#064928]/30 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#064928] focus:border-[#064928]"
               />
             </div>
             <div className="flex-1 overflow-y-auto">
               {filteredConversations.length > 0 ? (
                 filteredConversations.map((conv) => (
                   <div
-                    className={`p-4 border-b border-gray-700 cursor-pointer hover:bg-[#333333] transition-colors ${
-                      selectedConversation?.userId === conv.userId ? "bg-[#333333]" : ""
+                    className={`p-4 border-b border-[#064928]/20 cursor-pointer transition-colors ${
+                      selectedConversation?.userId === conv.userId 
+                        ? "bg-[#064928] text-white" 
+                        : "hover:bg-[#064928]/10 text-gray-300"
                     }`}
                     key={conv.userId}
                     onClick={() => handleConversationClick(conv)}
@@ -118,12 +123,18 @@ const DoctorMessages = () => {
                       <img
                         src={conv.avatar}
                         alt={conv.user}
-                        className="w-12 h-12 rounded-full object-cover"
+                        className="w-12 h-12 rounded-full object-cover border-2 border-[#064928]/30"
                       />
                       <div className="flex-1 min-w-0">
-                        <h3 className="text-white font-medium truncate">{conv.user}</h3>
-                        <p className="text-gray-400 text-sm truncate">{conv.lastMessage}</p>
-                        <p className="text-gray-500 text-xs mt-1">{formatTimeAgo(conv.lastMessageTime)}</p>
+                        <h3 className={`font-medium truncate ${selectedConversation?.userId === conv.userId ? "text-white" : "text-white"}`}>
+                          {conv.user}
+                        </h3>
+                        <p className={`text-sm truncate ${selectedConversation?.userId === conv.userId ? "text-white/80" : "text-gray-400"}`}>
+                          {conv.lastMessage}
+                        </p>
+                        <p className={`text-xs mt-1 ${selectedConversation?.userId === conv.userId ? "text-white/70" : "text-gray-500"}`}>
+                          {formatTimeAgo(conv.lastMessageTime)}
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -140,15 +151,15 @@ const DoctorMessages = () => {
           </div>
 
           {/* Chat Area */}
-          <div className="flex-1 flex flex-col">
+          <div className="flex-1 flex flex-col bg-[#000000]">
             {selectedConversation && selectedUser ? (
               <>
-                <div className="p-4 border-b border-gray-700 bg-[#333333]">
+                <div className="p-4 border-b border-[#064928]/30 bg-[#064928]/10">
                   <div className="flex items-center gap-3">
                     <img
                       src={selectedUser.image || selectedConversation.avatar}
                       alt={selectedUser.name}
-                      className="w-10 h-10 rounded-full object-cover"
+                      className="w-10 h-10 rounded-full object-cover border-2 border-[#064928]/30"
                     />
                     <div>
                       <h3 className="text-white font-medium">{selectedUser.name}</h3>
@@ -156,7 +167,7 @@ const DoctorMessages = () => {
                     </div>
                   </div>
                 </div>
-                <div className="flex-1 overflow-y-auto p-4 space-y-4">
+                <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-[#000000]">
                   {isLoadingMessages ? (
                     <div className="text-center text-gray-400 py-8">
                       <p>Loading messages...</p>
@@ -172,8 +183,8 @@ const DoctorMessages = () => {
                         <div
                           className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${
                             msg.sender === "doctor"
-                              ? "bg-primary text-white"
-                              : "bg-[#333333] text-gray-200"
+                              ? "bg-[#064928] text-white"
+                              : "bg-[#064928]/20 text-gray-200 border border-[#064928]/30"
                           }`}
                         >
                           <p>{msg.message}</p>
@@ -193,10 +204,10 @@ const DoctorMessages = () => {
                   )}
                   <div ref={messagesEndRef} />
                 </div>
-                <form onSubmit={handleSendMessage} className="p-4 border-t border-gray-700 flex gap-2">
+                <form onSubmit={handleSendMessage} className="p-4 border-t border-[#064928]/30 flex gap-2 bg-[#000000]">
                   <input
                     type="text"
-                    className="flex-1 bg-[#1a1a1a] border border-gray-600 rounded px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary"
+                    className="flex-1 bg-[#000000] border border-[#064928]/30 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#064928] focus:border-[#064928]"
                     placeholder="Type your message..."
                     value={newMessage}
                     onChange={(e) => setNewMessage(e.target.value)}
@@ -204,7 +215,7 @@ const DoctorMessages = () => {
                   />
                   <button
                     type="submit"
-                    className="bg-primary text-white px-6 py-2 rounded hover:bg-opacity-90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="bg-[#064928] text-white px-6 py-2 rounded-lg hover:bg-[#064928]/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-medium"
                     disabled={loading || !newMessage.trim()}
                   >
                     {loading ? "Sending..." : "Send"}
@@ -215,7 +226,7 @@ const DoctorMessages = () => {
               <div className="flex-1 flex items-center justify-center text-gray-400">
                 <div className="text-center">
                   <div className="text-4xl mb-4">💬</div>
-                  <h2 className="text-xl font-medium mb-2">Select a conversation</h2>
+                  <h2 className="text-xl font-medium mb-2 text-white">Select a conversation</h2>
                   <p>Choose a conversation from the list to view messages</p>
                 </div>
               </div>

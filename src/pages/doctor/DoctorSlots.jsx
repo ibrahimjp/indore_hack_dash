@@ -115,24 +115,27 @@ const DoctorSlots = () => {
   };
 
   return (
-    <div className="w-full max-w-6xl m-5">
-      <p className="mb-3 text-lg font-medium text-white">Manage Slots</p>
+    <div className="w-full p-6 sm:p-8">
+      <div className="mb-6">
+        <h2 className="text-3xl font-bold text-white mb-2">Manage Slots</h2>
+        <p className="text-gray-400">Set your available time slots for patients</p>
+      </div>
       
-      <div className="bg-[#2a2a2a] border border-gray-700 rounded p-6">
+      <div className="bg-[#000000] border border-[#064928]/30 rounded-xl p-6">
         {/* Add Slot Section */}
-        <div className="mb-8">
-          <h2 className="text-white font-semibold mb-4">Add Available Slots</h2>
+        <div className="mb-8 bg-[#064928]/10 border border-[#064928]/30 rounded-lg p-6">
+          <h2 className="text-white font-semibold mb-4 text-xl">Add Available Slots</h2>
           <div className="flex gap-4 flex-wrap">
             {/* Date Selection */}
             <div className="flex-1 min-w-[200px]">
-              <label className="block text-gray-300 text-sm mb-2">Select Date</label>
+              <label className="block text-gray-300 text-sm mb-2 font-medium">Select Date</label>
               <select
                 value={selectedDate}
                 onChange={(e) => {
                   setSelectedDate(e.target.value);
                   setSelectedTime("");
                 }}
-                className="w-full bg-[#1a1a1a] border border-gray-600 rounded px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-primary"
+                className="w-full bg-[#000000] border border-[#064928]/30 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-[#064928] focus:border-[#064928]"
               >
                 <option value="">Choose a date</option>
                 {dates.map((date, index) => (
@@ -145,12 +148,12 @@ const DoctorSlots = () => {
 
             {/* Time Selection */}
             <div className="flex-1 min-w-[200px]">
-              <label className="block text-gray-300 text-sm mb-2">Select Time</label>
+              <label className="block text-gray-300 text-sm mb-2 font-medium">Select Time</label>
               <select
                 value={selectedTime}
                 onChange={(e) => setSelectedTime(e.target.value)}
                 disabled={!selectedDate}
-                className="w-full bg-[#1a1a1a] border border-gray-600 rounded px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-primary disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full bg-[#000000] border border-[#064928]/30 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-[#064928] focus:border-[#064928] disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <option value="">Choose a time</option>
                 {getAvailableTimeSlots().map((time, index) => (
@@ -166,7 +169,7 @@ const DoctorSlots = () => {
               <button
                 onClick={handleAddSlot}
                 disabled={!selectedDate || !selectedTime || loading}
-                className="bg-primary text-white px-6 py-2 rounded hover:bg-opacity-90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="bg-[#064928] text-white px-6 py-2 rounded-lg hover:bg-[#064928]/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-medium"
               >
                 {loading ? "Adding..." : "Add Slot"}
               </button>
@@ -179,8 +182,9 @@ const DoctorSlots = () => {
           <h2 className="text-white font-semibold mb-4">Allocated Available Slots</h2>
           
           {Object.keys(availableSlots).length === 0 ? (
-            <div className="text-center py-8 text-gray-400">
-              <p>No slots added yet. Add slots above to make them available for booking.</p>
+            <div className="text-center py-12 text-gray-400">
+              <p className="text-lg mb-2">No slots added yet</p>
+              <p className="text-sm">Add slots above to make them available for booking</p>
             </div>
           ) : (
             <div className="space-y-4">
@@ -189,13 +193,13 @@ const DoctorSlots = () => {
                 .map((date) => (
                   <div
                     key={date.fullDate}
-                    className="bg-[#1a1a1a] border border-gray-600 rounded p-4"
+                    className="bg-[#064928]/10 border border-[#064928]/30 rounded-lg p-4"
                   >
-                    <div className="flex items-center justify-between mb-3">
-                      <h3 className="text-white font-medium">
+                    <div className="flex items-center justify-between mb-4">
+                      <h3 className="text-white font-semibold text-lg">
                         {date.dayName} - {date.date}
                       </h3>
-                      <span className="text-gray-400 text-sm">
+                      <span className="text-[#064928] text-sm font-medium bg-[#064928]/20 px-3 py-1 rounded-full">
                         {availableSlots[date.fullDate].length} slot(s) allocated
                       </span>
                     </div>
@@ -203,13 +207,13 @@ const DoctorSlots = () => {
                       {availableSlots[date.fullDate].map((time, index) => (
                         <div
                           key={index}
-                          className="flex items-center gap-2 bg-[#2a2a2a] border border-primary rounded px-3 py-2"
+                          className="flex items-center gap-2 bg-[#064928] border border-[#064928] rounded-lg px-4 py-2"
                         >
-                          <span className="text-primary font-medium">{time}</span>
+                          <span className="text-white font-medium">{time}</span>
                           <button
                             onClick={() => handleRemoveSlot(date.fullDate, time)}
                             disabled={loading}
-                            className="text-red-400 hover:text-red-300 transition-colors disabled:opacity-50 ml-2"
+                            className="text-white hover:text-red-300 transition-colors disabled:opacity-50 ml-2 font-bold"
                             title="Remove slot"
                           >
                             ×
@@ -224,9 +228,9 @@ const DoctorSlots = () => {
         </div>
 
         {/* Info Section */}
-        <div className="mt-6 p-4 bg-blue-900/20 border border-blue-700/50 rounded text-sm text-blue-300">
-          <p className="font-semibold mb-2">ℹ️ Important Information:</p>
-          <ul className="list-disc list-inside space-y-1 text-blue-200">
+        <div className="mt-6 p-4 bg-[#064928]/10 border border-[#064928]/30 rounded-lg text-sm text-gray-300">
+          <p className="font-semibold mb-2 text-[#064928]">ℹ️ Important Information:</p>
+          <ul className="list-disc list-inside space-y-1 text-gray-400">
             <li>Slots you add here will be available for users to book on the frontend.</li>
             <li>When a user books a slot, it will be automatically removed from available slots.</li>
             <li>You can add slots for up to 30 days in advance.</li>
