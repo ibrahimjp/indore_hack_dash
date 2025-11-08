@@ -177,33 +177,51 @@ export const DoctorContextProvider = ({ children }) => {
   // Get doctor slots
   const getDoctorSlots = async () => {
     try {
+      setLoading(true);
       const { data } = await axios.get(backendUrl + "/api/doctor/slots", {
         headers: { dToken },
       });
 
       if (data.success) {
-        setSlots(data.slots_booked || {});
+        setSlots(data.available_slots || {});
+        return { success: true };
       }
+      return { success: false, message: data.message };
     } catch (error) {
       toast.error(
         error.response?.data?.message || "Failed to fetch slots"
       );
+      return {
+        success: false,
+        message: error.response?.data?.message || "Failed to fetch slots",
+      };
+    } finally {
+      setLoading(false);
     }
   };
 
   // Update doctor slots
-  const updateDoctorSlots = async (slots_booked) => {
+  const updateDoctorSlots = async (available_slots) => {
     try {
       setLoading(true);
+      const slotsToSend = available_slots || {};
+      
+      // Ensure it's an object, not an array or null
+      if (typeof slotsToSend !== "object" || Array.isArray(slotsToSend)) {
+        toast.error("Invalid slots data. Slots must be an object.");
+        return { success: false, message: "Invalid slots data. Slots must be an object." };
+      }
+
       const { data } = await axios.post(
         backendUrl + "/api/doctor/slots",
-        { slots_booked },
+        { available_slots: slotsToSend },
         { headers: { dToken } }
       );
 
       if (data.success) {
         toast.success(data.message || "Slots updated successfully");
-        setSlots(slots_booked);
+        setSlots(slotsToSend);
+        await getDoctorSlots(); // Refresh slots after update
         return { success: true };
       }
       return { success: false, message: data.message };
