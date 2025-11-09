@@ -1,10 +1,11 @@
 import { createContext } from "react";
+import { URLS } from "../config/urls.js";
 
 export const AppContext = createContext();
 
 export const AppContextProvider = ({ children }) => {
   const currencySymbol = "$";
-  const backendUrl = import.meta.env.VITE_BACKEND_URL;
+  const backendUrl = URLS.BACKEND_URL;
 
   const calculateAge = (dob) => {
     const today = new Date();

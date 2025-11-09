@@ -2,11 +2,12 @@ import axios from "axios";
 import { useState } from "react";
 import { createContext } from "react";
 import { toast } from "react-toastify";
+import { URLS } from "../config/urls.js";
 
 export const DoctorContext = createContext();
 
 export const DoctorContextProvider = ({ children }) => {
-  const backendUrl = import.meta.env.VITE_BACKEND_URL;
+  const backendUrl = URLS.BACKEND_URL;
 
   const [dToken, setDToken] = useState(localStorage.getItem("dToken") || "");
   const [appointments, setAppointments] = useState([]);

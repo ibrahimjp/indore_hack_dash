@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { AdminContext } from "../context/AdminContext";
 import { DoctorContext } from "../context/DoctorContext";
 import { assets } from "../assets/assets";
+import { URLS } from "../config/urls.js";
 
 const Navbar = () => {
   const { aToken, setAToken } = useContext(AdminContext);
@@ -26,7 +27,7 @@ const Navbar = () => {
         </div>
         <div className="flex items-center gap-4">
           <button
-            onClick={() => window.location.href = "http://localhost:5173/"}
+            onClick={() => window.location.href = `${URLS.FRONTEND_URL}/`}
             className="bg-[#064928] text-white text-sm px-6 py-2 rounded-lg hover:bg-[#064928]/90 transition-all font-medium"
           >
             Home

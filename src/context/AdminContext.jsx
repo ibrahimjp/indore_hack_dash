@@ -2,6 +2,7 @@ import { useState } from "react";
 import { createContext } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { URLS } from "../config/urls.js";
 export const AdminContext = createContext();
 
 export const AdminContextProvider = ({ children }) => {
@@ -10,7 +11,7 @@ export const AdminContextProvider = ({ children }) => {
   const [appointments, setAppointments] = useState([]);
   const [dashData, setDashData] = useState(false);
 
-  const backendUrl = import.meta.env.VITE_BACKEND_URL;
+  const backendUrl = URLS.BACKEND_URL;
 
   const getAllDoctors = async () => {
     try {
