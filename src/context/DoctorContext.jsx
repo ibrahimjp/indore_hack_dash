@@ -7,7 +7,7 @@ import { URLS } from "../config/urls.js";
 export const DoctorContext = createContext();
 
 export const DoctorContextProvider = ({ children }) => {
-  const backendUrl = URLS.BACKEND_URL;
+  const backendUrl = URLS.BACKEND_URL || import.meta.env.VITE_BACKEND_URL || "http://localhost:8080";
 
   const [dToken, setDToken] = useState(localStorage.getItem("dToken") || "");
   const [appointments, setAppointments] = useState([]);

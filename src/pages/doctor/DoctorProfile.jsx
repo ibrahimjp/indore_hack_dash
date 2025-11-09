@@ -3,11 +3,13 @@ import { DoctorContext } from "../../context/DoctorContext";
 import { AppContext } from "../../context/AppContext";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { URLS } from "../../config/urls.js";
 
 const DoctorProfile = () => {
   const { dToken, profileData, setProfileData, getProfileData } =
     useContext(DoctorContext);
-  const { currencySymbol, backendUrl } = useContext(AppContext);
+  const { currencySymbol } = useContext(AppContext);
+  const backendUrl = URLS.BACKEND_URL;
 
   const [isEdit, setIsEdit] = useState(false);
   const [imageFile, setImageFile] = useState(null);
